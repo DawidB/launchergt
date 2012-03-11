@@ -282,7 +282,8 @@ namespace LauncherGTLib
         }
 
         /// <summary>
-        /// 
+        /// Initialize SQL Connection and declare SqlConn object.
+        /// In case of failure, sets SqlConn to null.
         /// </summary>
         /// <param name="_sqlConnStr"></param>
         /// <returns></returns>
