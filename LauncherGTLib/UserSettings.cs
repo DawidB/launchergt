@@ -1,0 +1,201 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Data;
+using System.Xml;
+using System.Xml.Serialization;
+using System.IO;
+using SqlHelperGTLib;
+using SqlHelperLib;
+using System.Windows.Forms;
+using InsERT;
+
+namespace LauncherGTLib
+{
+    [Serializable]
+    public class UserSettings
+    {
+        #region "Variables and properties"
+
+        public bool RememberSqlPass { get; set; }
+
+        public bool RememberInsPass { get; set; }
+
+        public string SqlServer { get; set; }
+
+        public string SqlPort { get; set; }
+
+        public int SqlAuthentication { get; set; }
+
+        public string SqlLogin { get; set; }
+
+        private string _sqlPassword = "";
+        [XmlIgnore]
+        public string SqlPassword 
+        {
+            get 
+            {
+                if (_sqlPassword == "")
+                    return "";
+                else
+                    return LauncherGT.Instance.AesEnc.GetDecryptedString(_sqlPassword); 
+            }
+            set
+            {
+                if (value == "")
+                    _sqlPassword = "";
+                else
+                    _sqlPassword = LauncherGT.Instance.AesEnc.GetEncryptedString(value); 
+            }
+        }
+        public string EncSqlPassword
+        {
+            get
+            {
+                if (RememberSqlPass)
+                    return _sqlPassword;
+                else
+                    return "";
+            }
+            set { _sqlPassword = value; }
+        }
+
+        public string SqlDatabase { get; set; }
+
+        public int InsAppType { get; set; }
+
+        public int NavStartMode { get; set; }
+
+        public string NavFilePath { get; set; }
+
+        public int InsAppLoginMode { get; set; }
+
+        public int InsAppStartMode { get; set; }
+
+        private int _insLoginId = 0;
+        public int InsLoginId 
+        {
+            get { return _insLoginId; } 
+            set 
+            { 
+                _insLoginId = value; 
+
+                //wyszukujemy nazwę operatora dla wybranego id
+                if (_dtInsOperators == null)
+                    LoadInsOperators();
+                if (_dtInsOperators != null)
+                    foreach (DataRow _dr in _dtInsOperators.Rows)
+                        if ((int)_dr.ItemArray[0] == _insLoginId)
+                        {
+                            _insLoginName = _dr.ItemArray[1].ToString();
+                            break;
+                        }
+            } 
+        }
+
+        private string _insLoginName = "";
+        public string InsLoginName { get { return _insLoginName; } }
+
+        private string _insPassword = "";
+        [XmlIgnore]
+        public string InsPassword
+        {
+            get 
+            {
+                if (_insPassword == "")
+                    return _insPassword;
+                else
+                    return LauncherGT.Instance.AesEnc.GetDecryptedString(_insPassword); 
+            }
+            set
+            {
+                if (value == "")
+                    _insPassword = "";
+                else
+                    _insPassword = LauncherGT.Instance.AesEnc.GetEncryptedString(value);
+            }
+        }
+        public string EncInsPassword 
+        {
+            get
+            {
+                if (RememberInsPass)
+                    return _insPassword;
+                else
+                    return "";
+            }
+            set { _insPassword = value; }
+        }
+
+        private DataTable _dtDatabases = null,
+            _dtInsOperators = null;
+        public DataTable DTDatabases { get { return _dtDatabases; } }
+        public DataTable DTInsOperators { get { return _dtDatabases; } }
+        
+        public string SqlConnString
+        {
+            get
+            {
+                string _sqlConnString = "Data Source=" + SqlServer + ";";
+
+                if (SqlDatabase == "")
+                    _sqlConnString += "Initial catalog=master;";
+                else
+                    _sqlConnString += "Initial catalog=" + SqlDatabase + ";";
+
+                if (SqlAuthentication == 1)
+                    _sqlConnString += "Integrated Security=SSPI;";
+                else
+                    _sqlConnString += "User Id=" + SqlLogin + ";Password=" + SqlPassword + ";";
+
+                return _sqlConnString;
+            }
+        }
+
+        #endregion
+
+
+        public UserSettings()
+        {
+        }
+
+        public DataTable LoadDatabases()
+        {
+            try
+            {
+                if (SqlServer == "" || (SqlAuthentication == (int)AutentykacjaEnum.gtaAutentykacjaMieszana && SqlLogin == ""))
+                    return null;
+
+                string _sqlQuery = @"
+SELECT name
+FROM master.sys.databases
+WHERE name NOT IN ('master', 'tempdb', 'model', 'msdb', 'tempdb')";
+
+                if (SqlHelper.Instance.Initialize(SqlConnString))
+                    SqlHelper.Instance.ExecuteDataTable(_sqlQuery, ref _dtDatabases, 0);
+            }
+            catch { }
+
+            return _dtDatabases;
+        }
+
+        public DataTable LoadInsOperators()
+        {
+            try
+            {
+                if (SqlServer == "" || (SqlAuthentication == (int)AutentykacjaEnum.gtaAutentykacjaMieszana && SqlLogin == ""))
+                    return null;
+
+                string _sqlQuery = @"
+SELECT uz_Id AS [id], uz_Nazwisko + ' ' + uz_Imie AS [uzytkownik] FROM pd_Uzytkownik";
+
+                SqlHelper.Instance.Initialize(SqlConnString);
+                SqlHelper.Instance.ExecuteDataTable(_sqlQuery, ref _dtInsOperators, 0);
+            }
+            catch { }
+
+            return _dtInsOperators;
+        }
+    }
+}
