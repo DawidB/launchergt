@@ -13,8 +13,7 @@ namespace LauncherGTLib
 {
     public class LauncherGTBase
     {
-        private AesEncrypter _aesEncrypter = new AesEncrypter("HrJpIPjRye8ycBsSYum1fJplEfb05/hz", "gWBVw8Ytz2wlhZuOIBuckw==");
-        public AesEncrypter AesEnc { get { return _aesEncrypter; } }
+        public AesEncrypter AesEnc { get; set; }
 
         public SqlConnection SqlConn { get; set; }
 
@@ -172,7 +171,10 @@ namespace LauncherGTLib
 
 
 
-        public LauncherGTBase() { }
+        public LauncherGTBase() 
+        {
+             AesEnc = new AesEncrypter("HrJpIPjRye8ycBsSYum1fJplEfb05/hz", "gWBVw8Ytz2wlhZuOIBuckw==");
+        }
 
         public bool StartNavireo(UserSettings _settings, bool _startWithIqa = false)
         {
