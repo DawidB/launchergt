@@ -106,7 +106,16 @@ namespace LauncherGTLib
                 if (_insPassword == "")
                     return _insPassword;
                 else
-                    return LauncherGT.Instance.AesEnc.GetDecryptedString(_insPassword); 
+                {
+                    try
+                    {
+                        return LauncherGT.Instance.AesEnc.GetDecryptedString(_insPassword);
+                    }
+                    catch 
+                    {
+                        return "";
+                    }
+                }
             }
             set
             {

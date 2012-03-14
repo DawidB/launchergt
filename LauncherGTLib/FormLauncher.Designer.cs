@@ -52,7 +52,7 @@
             this.BtnCancel.Location = new System.Drawing.Point(247, 97);
             this.BtnCancel.Name = "BtnCancel";
             this.BtnCancel.Size = new System.Drawing.Size(75, 23);
-            this.BtnCancel.TabIndex = 3;
+            this.BtnCancel.TabIndex = 2;
             this.BtnCancel.Text = "Anuluj";
             this.BtnCancel.UseVisualStyleBackColor = true;
             // 
@@ -63,7 +63,7 @@
             this.BtnOK.Location = new System.Drawing.Point(166, 97);
             this.BtnOK.Name = "BtnOK";
             this.BtnOK.Size = new System.Drawing.Size(75, 23);
-            this.BtnOK.TabIndex = 4;
+            this.BtnOK.TabIndex = 1;
             this.BtnOK.Text = "OK";
             this.BtnOK.UseVisualStyleBackColor = true;
             this.BtnOK.Click += new System.EventHandler(this.BtnOK_Click);

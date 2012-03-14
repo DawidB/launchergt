@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Data;
 using System.Data.SqlClient;
+using System.Windows.Forms;
 
 namespace SqlHelperLib
 {
@@ -8,8 +9,7 @@ namespace SqlHelperLib
     {
         protected SqlConnection _sqlConn = null;
         /// <summary>
-        /// Akcesor, który podczas modyfikacji obiektu typu SqlConnection sprawdza, 
-        /// czy poprzednia instancja została zamknięta (jeśli nie - wówczas zamyka instancję)
+        /// Accessor which checks if old SqlConnection is closed (if not then it closes connection) and sets new value.
         /// </summary>
         public SqlConnection SqlConn
         {
@@ -30,7 +30,16 @@ namespace SqlHelperLib
             }
         }
 
-        public bool ShowErrorMsg { get; set; }
+        /// <summary>
+        /// When set to true, all errors will be displayed by MessageBox.
+        /// </summary>
+        public bool ShowErrorMessages { get; set; }
+
+        public void ShowErrorMessage(string _methodName)
+        {
+            if (ShowErrorMessages)
+                MessageBox.Show("Błąd w metodzie " + _methodName + "(). Komunikat:\n\n" + _errorMsg, "Błąd", MessageBoxButtons.OK, MessageBoxIcon.Error);
+        }
 
         protected string _errorMsg = "";
         public string ErrorMsg { get { return _errorMsg; } }
@@ -76,6 +85,7 @@ namespace SqlHelperLib
             catch (Exception ex)
             {
                 _errorMsg = ex.Message;
+                ShowErrorMessage("Initialize");
                 return false;
             }
         }
@@ -104,6 +114,7 @@ namespace SqlHelperLib
             {
                 _lastQuery = _sqlQuery;
                 _errorMsg = ex.Message;
+                ShowErrorMessage("ExecuteReader");
                 return false;              
             }
         }
@@ -129,6 +140,7 @@ namespace SqlHelperLib
             {
                 _lastQuery = _sqlQuery;
                 _errorMsg = ex.Message;
+                ShowErrorMessage("ExecuteAdapter");
                 return false;
             }
         }
@@ -156,6 +168,7 @@ namespace SqlHelperLib
             {
                 _lastQuery = _sqlQuery;
                 _errorMsg = ex.Message;
+                ShowErrorMessage("ExecuteDataSet");
                 return false;
             }
         }
@@ -207,6 +220,7 @@ namespace SqlHelperLib
             {
                 _lastQuery = _sqlQuery;
                 _errorMsg = ex.Message;
+                ShowErrorMessage("ExecuteQuery");
                 return -2;
             }
         }
@@ -236,6 +250,7 @@ namespace SqlHelperLib
             {
                 _lastQuery = _sqlQuery;
                 _errorMsg = ex.Message;
+                ShowErrorMessage("ReturnObj");
                 return null;
             }
         }
@@ -262,6 +277,7 @@ namespace SqlHelperLib
             {
                 _lastQuery = _sqlQuery;
                 _errorMsg = ex.Message;
+                ShowErrorMessage("ReturnInt");
                 return 0;
             }
         }
@@ -288,6 +304,7 @@ namespace SqlHelperLib
             {
                 _lastQuery = _sqlQuery;
                 _errorMsg = ex.Message;
+                ShowErrorMessage("ReturnDec");
                 return 0;
             }
         }
@@ -314,6 +331,7 @@ namespace SqlHelperLib
             {
                 _lastQuery = _sqlQuery;
                 _errorMsg = ex.Message;
+                ShowErrorMessage("ReturnStr");
                 return string.Empty;
             }
         }
@@ -340,6 +358,7 @@ namespace SqlHelperLib
             {
                 _lastQuery = _sqlQuery;
                 _errorMsg = ex.Message;
+                ShowErrorMessage("ReturnBool");
                 return false;
             }
         }

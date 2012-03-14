@@ -9,8 +9,8 @@ namespace DataEncryptionLib
         private AesCryptoServiceProvider aesCSP = new AesCryptoServiceProvider();
 
         /// <summary>
-        /// Konstruktor domyslne, automatycznie generujący klucz szyfrujący oraz wektor inicjalizacji.
-        /// Klucz i wektor ważne są wyłącznie dla pojedynczej sesji działania aplikacji.
+        /// Default constructor. Automatically generates crypt key and initialization vector.
+        /// Key and vector are valid only for active session.
         /// </summary>
         public AesEncrypter()
         {
@@ -19,8 +19,8 @@ namespace DataEncryptionLib
         }
 
         /// <summary>
-        /// Konstruktor przyjmujący zdefiniowany przez użytkownika klucz szyfrujący oraz wektor inicjalizacji.
-        /// Klucz i wektor są ważne podczas każdorazowego uruchamiania aplikacji.
+        /// Constructor accepting crypt key and initialization vector defined by user.
+        /// Key and vector are valid for multiple sessions.
         /// </summary>
         /// <param name="_key"></param>
         /// <param name="_iv"></param>
@@ -41,54 +41,82 @@ namespace DataEncryptionLib
         }
         
         /// <summary>
-        /// Metoda szyfrująca łańcuch znaków i zwracająca tablicę wartości typu "byte".
+        /// Encrypts string and return array of byte.
         /// </summary>
         /// <param name="_stringToEncrypt"></param>
         /// <returns></returns>
         public byte[] EncryptString(string _stringToEncrypt)
         {
-            byte[] inBlock = UnicodeEncoding.Unicode.GetBytes(_stringToEncrypt);
-            ICryptoTransform xfrm = aesCSP.CreateEncryptor();
-            byte[] outBlock = xfrm.TransformFinalBlock(inBlock, 0, inBlock.Length);
+            try
+            {
+                byte[] inBlock = UnicodeEncoding.Unicode.GetBytes(_stringToEncrypt);
+                ICryptoTransform xfrm = aesCSP.CreateEncryptor();
+                byte[] outBlock = xfrm.TransformFinalBlock(inBlock, 0, inBlock.Length);
 
-            return outBlock;
+                return outBlock;
+            }
+            catch (Exception ex)
+            {
+                return null;
+            }
         }
 
         /// <summary>
-        /// Metoda deszyfrująca informację podaną za pomocą tablicy typu "byte" do łańcucha znaków.
+        /// Decrypts array of byte and returns string.
         /// </summary>
         /// <param name="_bytesToDecrypt"></param>
         /// <returns></returns>
         public string DecryptBytes(byte[] _bytesToDecrypt)
         {
-            ICryptoTransform xfrm = aesCSP.CreateDecryptor();
-            byte[] outBlock = xfrm.TransformFinalBlock(_bytesToDecrypt, 0, _bytesToDecrypt.Length);
+            try
+            {
+                ICryptoTransform xfrm = aesCSP.CreateDecryptor();
+                byte[] outBlock = xfrm.TransformFinalBlock(_bytesToDecrypt, 0, _bytesToDecrypt.Length);
 
-            return UnicodeEncoding.Unicode.GetString(outBlock);
+                return UnicodeEncoding.Unicode.GetString(outBlock);
+            }
+            catch (Exception ex)
+            {
+                return "";
+            }
         }
 
         /// <summary>
-        /// Uproszczona metoda szyfrowania - przyjmuje, szyfruje i zwraca wartośc typu "string".
+        /// Simplified encrypter - returns encrypted string.
         /// </summary>
         /// <param name="_stringToEncrypt"></param>
         /// <returns></returns>
         public string GetEncryptedString(string _stringToEncrypt)
         {
-            byte[] _decryptedArray = EncryptString(_stringToEncrypt);
+            try
+            {
+                byte[] _decryptedArray = EncryptString(_stringToEncrypt);
 
-            return Convert.ToBase64String(_decryptedArray);
+                return Convert.ToBase64String(_decryptedArray);
+            }
+            catch
+            {
+                return "";
+            }
         }
 
         /// <summary>
-        /// Uproszczona metoda deszyfrowania - przyjmuje, deszyfruje i zwraca wartośc typu "string".
+        /// Simplified decrypter - returns decrypted string.
         /// </summary>
         /// <param name="_stringToDecrypt"></param>
         /// <returns></returns>
         public string GetDecryptedString(string _stringToDecrypt)
         {
-            byte[] _encryptedArray = Convert.FromBase64String(_stringToDecrypt);
-            
-            return DecryptBytes(_encryptedArray);
+            try
+            {
+                byte[] _encryptedArray = Convert.FromBase64String(_stringToDecrypt);
+
+                return DecryptBytes(_encryptedArray);
+            }
+            catch
+            {
+                return "";
+            }
         }
     }
 }

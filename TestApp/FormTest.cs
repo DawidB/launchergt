@@ -33,8 +33,10 @@ namespace TestApp
             _settingsDef[1].TabKey = "tabNavireoIqa";
             _settingsDef[1].TabText = "Ustawienia Navireo";
 
-            FormLauncher _formLauncher = new FormLauncher(_settingsDef, true);
-            //FormLauncher _formLauncher = new FormLauncher(true, UserSettingsMode.Full);
+            //LauncherGT.Instance.AesEnc = new DataEncryptionLib.AesEncrypter("PaleL6v8TaUeN4JjFGJLHhyDVYzfBnQJ", "qRQTI/8t3R7JFTc1CYs52A==");
+
+            //FormLauncher _formLauncher = new FormLauncher(_settingsDef, true);
+            FormLauncher _formLauncher = new FormLauncher(true, UserSettingsMode.InsSubiektGT);
             //_formLauncher.Size = new Size(350, 400);
             //DialogResult dr = _formLauncher.SilentStart();
             DialogResult dr = _formLauncher.ShowDialog();
