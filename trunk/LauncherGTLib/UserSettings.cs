@@ -19,16 +19,28 @@ namespace LauncherGTLib
         #region "Variables and properties"
 
         public bool RememberSqlPass { get; set; }
+        [XmlIgnore]
+        public bool EnabledRememberSqlPass { get; set; }
 
         public bool RememberInsPass { get; set; }
+        [XmlIgnore]
+        public bool EnabledRememberInsPass { get; set; }
 
         public string SqlServer { get; set; }
+        [XmlIgnore]
+        public bool EnabledSqlServer { get; set; }
 
         public string SqlPort { get; set; }
+        [XmlIgnore]
+        public bool EnabledSqlPort { get; set; }
 
         public int SqlAuthentication { get; set; }
+        [XmlIgnore]
+        public bool EnabledSqlAuth { get; set; }
 
         public string SqlLogin { get; set; }
+        [XmlIgnore]
+        public bool EnabledSqlLogin { get; set; }
 
         private string _sqlPassword = "";
         [XmlIgnore]
@@ -60,18 +72,32 @@ namespace LauncherGTLib
             }
             set { _sqlPassword = value; }
         }
+        [XmlIgnore]
+        public bool EnabledSqlPassword { get; set; }
 
         public string SqlDatabase { get; set; }
+        [XmlIgnore]
+        public bool EnabledSqlDatabase { get; set; }
 
         public int InsAppType { get; set; }
+        [XmlIgnore]
+        public bool EnabledInsAppType { get; set; }
 
         public int NavStartMode { get; set; }
+        [XmlIgnore]
+        public bool EnabledNavStartMode { get; set; }
 
         public string NavFilePath { get; set; }
+        [XmlIgnore]
+        public bool EnabledNavFilePathMode { get; set; }
 
         public int InsAppLoginMode { get; set; }
+        [XmlIgnore]
+        public bool EnabledInsAppLoginMode { get; set; }
 
         public int InsAppStartMode { get; set; }
+        [XmlIgnore]
+        public bool EnabledInsAppStartMode { get; set; }
 
         private int _insLoginId = 0;
         public int InsLoginId 
@@ -96,6 +122,8 @@ namespace LauncherGTLib
 
         private string _insLoginName = "";
         public string InsLoginName { get { return _insLoginName; } }
+        [XmlIgnore]
+        public bool EnabledInsLoginName { get; set; }
 
         private string _insPassword = "";
         [XmlIgnore]
@@ -136,6 +164,8 @@ namespace LauncherGTLib
             }
             set { _insPassword = value; }
         }
+        [XmlIgnore]
+        public bool EnabledInsPassword { get; set; }
 
         private DataTable _dtDatabases = null,
             _dtInsOperators = null;
@@ -167,6 +197,21 @@ namespace LauncherGTLib
 
         public UserSettings()
         {
+            EnabledInsAppLoginMode = true;
+            EnabledInsAppStartMode = true;
+            EnabledInsAppType = true;
+            EnabledInsLoginName = true;
+            EnabledInsPassword = true;
+            EnabledNavFilePathMode = true;
+            EnabledNavStartMode = true;
+            EnabledRememberInsPass = true;
+            EnabledRememberSqlPass = true;
+            EnabledSqlAuth = true;
+            EnabledSqlDatabase = true;
+            EnabledSqlLogin = true;
+            EnabledSqlPassword = true;
+            EnabledSqlPort = true;
+            EnabledSqlServer = true;
         }
 
         public DataTable LoadDatabases()

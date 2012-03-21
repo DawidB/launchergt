@@ -18,7 +18,7 @@ namespace LauncherGTLib
             _isInsertGtVisible = false,
             _isNavireoVisible = false,
             _logEvents = false;
-
+        
         public int TableHeight { get; set; }
 
         public bool ShowMessages { get; set;}
@@ -231,7 +231,7 @@ namespace LauncherGTLib
             ManageControlState();
         }
 
-        private void ManageControlState()
+        public void ManageControlState()
         {
             TBSqlServer.Enabled = true;
             TBSqlLogin.Enabled = (_settings.SqlAuthentication == 0) ? true : false;
@@ -255,6 +255,37 @@ namespace LauncherGTLib
             TBSqlPort.Enabled = TBSqlServer.Enabled;
             CBSqlAuthentication.Enabled = TBSqlServer.Enabled;
             CBSqlDatabase.Enabled = TBSqlServer.Enabled;
+
+            if (!Settings.EnabledSqlServer)
+                TBSqlServer.Enabled = false;
+            if (!Settings.EnabledSqlPort)
+                TBSqlPort.Enabled = false;
+            if (!Settings.EnabledSqlLogin)
+                TBSqlLogin.Enabled = false;
+            if (!Settings.EnabledSqlPassword)
+                TBSqlPass.Enabled = false;
+            if (!Settings.EnabledSqlDatabase)
+                CBSqlDatabase.Enabled = false;
+            if (!Settings.EnabledSqlAuth)
+                CBSqlAuthentication.Enabled = false;
+            if (!Settings.EnabledNavStartMode)
+                CBNavStartMode.Enabled = false;
+            if (!Settings.EnabledNavFilePathMode)
+                TBNavFilePath.Enabled = false;
+            if (!Settings.EnabledInsAppLoginMode)
+                CBInsAppLoginMode.Enabled = false;
+            if (!Settings.EnabledInsAppStartMode)
+                CBInsAppStartMode.Enabled = false;
+            if (!Settings.EnabledInsAppType)
+                CBInsAppType.Enabled = false;
+            if (!Settings.EnabledInsLoginName)
+                CBInsLogin.Enabled = false;
+            if (!Settings.EnabledInsPassword)
+                TBInsPassword.Enabled = false;
+            if (!Settings.EnabledRememberInsPass)
+                ChBInsPassword.Enabled = false;
+            if (!Settings.EnabledRememberSqlPass)
+                ChBSqlPassword.Enabled = false;
         }
 
         public bool CheckSettings(bool _overrideShowMsgs = true)
