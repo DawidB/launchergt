@@ -9,14 +9,25 @@
 
         /// <summary>
         /// Clean up any resources being used.
+        /// In order to close Insert apps, must be invoked explicitly!
         /// </summary>
         /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
         protected override void Dispose(bool disposing)
         {
             if (disposing && (components != null))
-            {
+            {                
                 components.Dispose();
             }
+
+            if (LauncherGT.Instance.CloseInsAppsOnExit)
+            {
+                LauncherGT.Instance.DisposeNavireo();
+                LauncherGT.Instance.DisposeSubiektGT();
+                LauncherGT.Instance.DisposeGestorGT();
+                LauncherGT.Instance.DisposeRewizorGT();
+                LauncherGT.Instance.DisposeGratyfikantGT();
+            }
+
             base.Dispose(disposing);
         }
 

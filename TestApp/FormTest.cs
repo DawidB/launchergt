@@ -38,23 +38,24 @@ namespace TestApp
             //FormLauncher _formLauncher = new FormLauncher(_settingsDef, true);
             FormLauncher _formLauncher = new FormLauncher(true, UserSettingsMode.InsSubiektGT);
 
-            LauncherGT.Instance.SettingsPackage.Settings[0].EnabledSqlServer = false;
-            LauncherGT.Instance.SettingsPackage.Settings[0].EnabledSqlPort = false;
-            LauncherGT.Instance.SettingsPackage.Settings[0].EnabledSqlAuth = false;
-            LauncherGT.Instance.SettingsPackage.Settings[0].EnabledSqlLogin = false;
-            LauncherGT.Instance.SettingsPackage.Settings[0].EnabledSqlDatabase = false;
-            LauncherGT.Instance.SettingsPackage.Settings[0].EnabledSqlPassword = false;
-            LauncherGT.Instance.SettingsPackage.Settings[0].EnabledNavStartMode = false;
-            LauncherGT.Instance.SettingsPackage.Settings[0].EnabledNavFilePathMode = false;
-            LauncherGT.Instance.SettingsPackage.Settings[0].EnabledInsAppLoginMode = false;
-            LauncherGT.Instance.SettingsPackage.Settings[0].EnabledInsAppStartMode = false;
-            LauncherGT.Instance.SettingsPackage.Settings[0].EnabledInsAppType = false;
-            LauncherGT.Instance.SettingsPackage.Settings[0].EnabledRememberInsPass = false;
-            LauncherGT.Instance.SettingsPackage.Settings[0].EnabledRememberSqlPass = false;
+            //LauncherGT.Instance.SettingsPackage.Settings[0].EnabledSqlServer = false;
+            //LauncherGT.Instance.SettingsPackage.Settings[0].EnabledSqlPort = false;
+            //LauncherGT.Instance.SettingsPackage.Settings[0].EnabledSqlAuth = false;
+            //LauncherGT.Instance.SettingsPackage.Settings[0].EnabledSqlLogin = false;
+            //LauncherGT.Instance.SettingsPackage.Settings[0].EnabledSqlDatabase = false;
+            //LauncherGT.Instance.SettingsPackage.Settings[0].EnabledSqlPassword = false;
+            //LauncherGT.Instance.SettingsPackage.Settings[0].EnabledNavStartMode = false;
+            //LauncherGT.Instance.SettingsPackage.Settings[0].EnabledNavFilePathMode = false;
+            //LauncherGT.Instance.SettingsPackage.Settings[0].EnabledInsAppLoginMode = false;
+            //LauncherGT.Instance.SettingsPackage.Settings[0].EnabledInsAppStartMode = false;
+            //LauncherGT.Instance.SettingsPackage.Settings[0].EnabledInsAppType = false;
+            //LauncherGT.Instance.SettingsPackage.Settings[0].EnabledRememberInsPass = false;
+            //LauncherGT.Instance.SettingsPackage.Settings[0].EnabledRememberSqlPass = false;
 
             //_formLauncher.Size = new Size(350, 400);
             //DialogResult dr = _formLauncher.SilentStart();
             DialogResult dr = _formLauncher.ShowDialog();
+            _formLauncher.Dispose();
             this.Close();
         }
     }

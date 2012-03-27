@@ -17,6 +17,8 @@ namespace LauncherGTLib
 
         public SqlConnection SqlConn { get; set; }
 
+        public bool CloseInsAppsOnExit { get; set; }
+
         private Navireo _navireo = null;
         public Navireo Navireo
         {
@@ -46,7 +48,7 @@ namespace LauncherGTLib
             }
         }
 
-        private Subiekt _subiekt = null;
+        public Subiekt _subiekt = null;
         public Subiekt Subiekt
         {
             get
@@ -174,6 +176,7 @@ namespace LauncherGTLib
         public LauncherGTBase() 
         {
              AesEnc = new AesEncrypter("HrJpIPjRye8ycBsSYum1fJplEfb05/hz", "gWBVw8Ytz2wlhZuOIBuckw==");
+             CloseInsAppsOnExit = false;
         }
 
         public bool StartNavireo(UserSettings _settings, bool _startWithIqa = false)

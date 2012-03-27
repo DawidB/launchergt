@@ -176,9 +176,17 @@ namespace LauncherGTLib
         {
             get
             {
-                string _sqlConnString = "Data Source=" + SqlServer + ";";
+                if (string.IsNullOrEmpty(SqlServer))
+                    return "";
 
-                if (SqlDatabase == "")
+                string _sqlConnString = "Data Source=" + SqlServer;
+
+                if (!string.IsNullOrEmpty(SqlPort))
+                    _sqlConnString += "," + SqlPort;
+
+                _sqlConnString += ";";
+
+                if (string.IsNullOrEmpty(SqlDatabase))
                     _sqlConnString += "Initial catalog=master;";
                 else
                     _sqlConnString += "Initial catalog=" + SqlDatabase + ";";
@@ -218,7 +226,7 @@ namespace LauncherGTLib
         {
             try
             {
-                if (SqlServer == "" || (SqlAuthentication == (int)AutentykacjaEnum.gtaAutentykacjaMieszana && SqlLogin == ""))
+                if (string.IsNullOrEmpty(SqlConnString))
                     return null;
 
                 string _sqlQuery = @"
@@ -238,7 +246,7 @@ WHERE name NOT IN ('master', 'tempdb', 'model', 'msdb', 'tempdb')";
         {
             try
             {
-                if (SqlServer == "" || (SqlAuthentication == (int)AutentykacjaEnum.gtaAutentykacjaMieszana && SqlLogin == ""))
+                if (string.IsNullOrEmpty(SqlConnString))
                     return null;
 
                 string _sqlQuery = @"
