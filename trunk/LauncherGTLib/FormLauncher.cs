@@ -11,7 +11,7 @@ using System.Windows.Forms;
 
 namespace LauncherGTLib
 {
-    public partial class FormLauncher : Form, IDisposable
+    public partial class FormLauncher : Form
     {
         private void SaveSettings()
         {
@@ -115,15 +115,6 @@ namespace LauncherGTLib
                         this.Height = 490;
                 }
             }
-        }
-
-        ~FormLauncher()
-        {
-            LauncherGT.Instance.DisposeNavireo();
-            LauncherGT.Instance.DisposeSubiektGT();
-            LauncherGT.Instance.DisposeGestorGT();
-            LauncherGT.Instance.DisposeRewizorGT();
-            LauncherGT.Instance.DisposeGratyfikantGT();
         }
 
         private void BtnOK_Click(object sender, EventArgs e)
