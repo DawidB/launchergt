@@ -30,7 +30,7 @@ namespace LauncherGTLib
                 {
                     if (_navireo != null)
                         _subjectData = _navireo.DanePodmiotu;
-
+                    
                     return _navireo;
                 }
                 catch
