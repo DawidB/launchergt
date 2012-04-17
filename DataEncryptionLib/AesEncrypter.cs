@@ -6,7 +6,8 @@ namespace DataEncryptionLib
 {    
     public class AesEncrypter
     {
-        private AesCryptoServiceProvider aesCSP = new AesCryptoServiceProvider();
+        private AesCryptoServiceProvider _aesCSP = new AesCryptoServiceProvider();
+        public AesCryptoServiceProvider AesCSP { get { return _aesCSP; } }
 
         /// <summary>
         /// Default constructor. Automatically generates crypt key and initialization vector.
@@ -14,8 +15,8 @@ namespace DataEncryptionLib
         /// </summary>
         public AesEncrypter()
         {
-            aesCSP.GenerateKey();
-            aesCSP.GenerateIV();
+            _aesCSP.GenerateKey();
+            _aesCSP.GenerateIV();
         }
 
         /// <summary>
@@ -30,13 +31,13 @@ namespace DataEncryptionLib
 
             try
             {
-                aesCSP.Key = Convert.FromBase64String(_key);
-                aesCSP.IV = Convert.FromBase64String(_initVector);
+                _aesCSP.Key = Convert.FromBase64String(_key);
+                _aesCSP.IV = Convert.FromBase64String(_initVector);
             }
             catch
             {
-                aesCSP.GenerateKey();
-                aesCSP.GenerateIV();
+                _aesCSP.GenerateKey();
+                _aesCSP.GenerateIV();
             }
         }
         
@@ -50,7 +51,7 @@ namespace DataEncryptionLib
             try
             {
                 byte[] inBlock = UnicodeEncoding.Unicode.GetBytes(_stringToEncrypt);
-                ICryptoTransform xfrm = aesCSP.CreateEncryptor();
+                ICryptoTransform xfrm = _aesCSP.CreateEncryptor();
                 byte[] outBlock = xfrm.TransformFinalBlock(inBlock, 0, inBlock.Length);
 
                 return outBlock;
@@ -70,7 +71,7 @@ namespace DataEncryptionLib
         {
             try
             {
-                ICryptoTransform xfrm = aesCSP.CreateDecryptor();
+                ICryptoTransform xfrm = _aesCSP.CreateDecryptor();
                 byte[] outBlock = xfrm.TransformFinalBlock(_bytesToDecrypt, 0, _bytesToDecrypt.Length);
 
                 return UnicodeEncoding.Unicode.GetString(outBlock);
