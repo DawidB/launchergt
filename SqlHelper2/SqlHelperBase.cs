@@ -59,6 +59,8 @@ namespace SqlHelperLib
         /// <returns></returns>
         public bool Initialize(string _sqlConnStr)
         {
+            _errorMsg = "";
+
             try
             {
                 //sprawdzamy, czy połączenie zostalo zamknięte; jeśli nie - zamykamy je;
@@ -99,6 +101,8 @@ namespace SqlHelperLib
         {
             SqlCommand _sqlCommand = null;
             _sqlDataReader = null;
+            _errorMsg = "";
+            _lastQuery = _sqlQuery;
             
             try
             {
@@ -112,7 +116,6 @@ namespace SqlHelperLib
             }
             catch(Exception ex)
             {
-                _lastQuery = _sqlQuery;
                 _errorMsg = ex.Message;
                 ShowErrorMessage("ExecuteReader");
                 return false;              
@@ -124,9 +127,11 @@ namespace SqlHelperLib
         /// </summary>
         /// <param name="_sqlQuery"></param>
         /// <param name="_sqlDataAdapter"></param>
-        public bool ExecuteAdapter(string _sqlQuery, ref SqlDataAdapter _sqlDataAdapter)
+        public bool ExecuteDataAdapter(string _sqlQuery, ref SqlDataAdapter _sqlDataAdapter)
         {
             _sqlDataAdapter = null;
+            _errorMsg = "";
+            _lastQuery = _sqlQuery;
 
             try
             {
@@ -138,7 +143,6 @@ namespace SqlHelperLib
             }
             catch (Exception ex)
             {
-                _lastQuery = _sqlQuery;
                 _errorMsg = ex.Message;
                 ShowErrorMessage("ExecuteAdapter");
                 return false;
@@ -153,6 +157,7 @@ namespace SqlHelperLib
         public bool ExecuteDataSet(string _sqlQuery, ref DataSet _dataSet)
         {
             SqlDataAdapter _sqlDataAdapter = null;
+            _errorMsg = "";
 
             try
             {
@@ -166,7 +171,6 @@ namespace SqlHelperLib
             }
             catch (Exception ex)
             {
-                _lastQuery = _sqlQuery;
                 _errorMsg = ex.Message;
                 ShowErrorMessage("ExecuteDataSet");
                 return false;
@@ -183,6 +187,7 @@ namespace SqlHelperLib
         public bool ExecuteDataTable(string _sqlQuery, ref DataTable _dataTable, int _tabId = 0)
         {
             _dataTable = null;
+            _errorMsg = "";
 
             DataSet _ds = null;
             ExecuteDataSet(_sqlQuery, ref _ds);
@@ -191,6 +196,32 @@ namespace SqlHelperLib
                 if (_ds.Tables.Count > _tabId)
                 {
                     _dataTable = _ds.Tables[_tabId];                    
+                    return true;
+                }
+
+            return false;
+        }
+
+        /// <summary>
+        /// Metoda zwracająca wiersz z danymi, zwrócony w wyniku wykonania zapytania.
+        /// Opcjonalnie użytkownik może podać indeks tabeli oraz wiersza, zwracanej w wyniku wykonania zapytania.
+        /// </summary>
+        /// <param name="_sqlQuery"></param>
+        /// <param name="_dataTable"></param>
+        /// <param name="_tabId"></param>
+        /// <returns></returns>
+        public bool ExecuteDataRow(string _sqlQuery, ref DataRow _dataRow, int _tabId = 0, int _rowId = 0)
+        {
+            _dataRow = null;
+            _errorMsg = "";
+
+            DataTable _dataTable = null;
+            ExecuteDataTable(_sqlQuery, ref _dataTable, _tabId);
+
+            if (_dataTable != null)
+                if (_dataTable.Rows.Count > _rowId)
+                {
+                    _dataRow = _dataTable.Rows[_rowId];
                     return true;
                 }
 
@@ -207,6 +238,8 @@ namespace SqlHelperLib
         public int ExecuteQuery(string _sqlQuery)
         {
             SqlCommand _sqlCommand = null;
+            _errorMsg = "";
+            _lastQuery = _sqlQuery;
 
             try
             {
@@ -218,7 +251,6 @@ namespace SqlHelperLib
             }
             catch (Exception ex)
             {
-                _lastQuery = _sqlQuery;
                 _errorMsg = ex.Message;
                 ShowErrorMessage("ExecuteQuery");
                 return -2;
@@ -235,6 +267,8 @@ namespace SqlHelperLib
         public object ReturnObj(string _sqlQuery, int _colId = 0)
         {
             DataTable _dt = null;
+            _errorMsg = "";
+            _lastQuery = _sqlQuery;
 
             try
             {
@@ -248,7 +282,6 @@ namespace SqlHelperLib
             }
             catch (Exception ex)
             {
-                _lastQuery = _sqlQuery;
                 _errorMsg = ex.Message;
                 ShowErrorMessage("ReturnObj");
                 return null;
@@ -264,6 +297,8 @@ namespace SqlHelperLib
         /// <returns></returns>
         public int ReturnInt(string _sqlQuery, int _colId = 0)
         {
+            _errorMsg = "";
+
             try
             {
                 object _val = ReturnObj(_sqlQuery, _colId);
@@ -275,7 +310,6 @@ namespace SqlHelperLib
             }
             catch(Exception ex)
             {
-                _lastQuery = _sqlQuery;
                 _errorMsg = ex.Message;
                 ShowErrorMessage("ReturnInt");
                 return 0;
@@ -291,6 +325,8 @@ namespace SqlHelperLib
         /// <returns></returns>
         public decimal ReturnDec(string _sqlQuery, int _colId = 0)
         {
+            _errorMsg = "";
+
             try
             {
                 object _val = ReturnObj(_sqlQuery, _colId);
@@ -302,7 +338,6 @@ namespace SqlHelperLib
             }
             catch (Exception ex)
             {
-                _lastQuery = _sqlQuery;
                 _errorMsg = ex.Message;
                 ShowErrorMessage("ReturnDec");
                 return 0;
@@ -318,6 +353,8 @@ namespace SqlHelperLib
         /// <returns></returns>
         public string ReturnStr(string _sqlQuery, int _colId = 0)
         {
+            _errorMsg = "";
+
             try
             {
                 object _val = ReturnObj(_sqlQuery, _colId);
@@ -329,7 +366,6 @@ namespace SqlHelperLib
             }
             catch (Exception ex)
             {
-                _lastQuery = _sqlQuery;
                 _errorMsg = ex.Message;
                 ShowErrorMessage("ReturnStr");
                 return string.Empty;
@@ -345,6 +381,8 @@ namespace SqlHelperLib
         /// <returns></returns>
         public bool ReturnBool(string _sqlQuery, int _colId = 0)
         {
+            _errorMsg = "";
+
             try
             {
                 object _val = ReturnObj(_sqlQuery, _colId);
@@ -356,7 +394,6 @@ namespace SqlHelperLib
             }
             catch (Exception ex)
             {
-                _lastQuery = _sqlQuery;
                 _errorMsg = ex.Message;
                 ShowErrorMessage("ReturnBool");
                 return false;

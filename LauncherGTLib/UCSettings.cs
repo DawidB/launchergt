@@ -302,17 +302,17 @@ namespace LauncherGTLib
                     _checkValid = LauncherGT.Instance.StartSqlConn(_settings.SqlConnString);
 
                     if (_checkValid)
-                        _resultMsg = "1. Pomyślnie nawiązano połączenie SQL.\n\n";
+                        _resultMsg = "Pomyślnie nawiązano połączenie SQL.";
                     else
                     {
-                        _resultMsg = "1. Nie udało się zainicjować połączenia SQL.\nKomunikat błędu:\n" + SqlHelper.Instance.ErrorMsg + "\n\n";
+                        _resultMsg = "Nie udało się zainicjować połączenia SQL.\nKomunikat błędu:\n" + SqlHelper.Instance.ErrorMsg;
                         _resultIcon = MessageBoxIcon.Error;
                     }
                 }
 
-                if (_checkValid)
+                if (_checkValid && (_isInsertVisible || _isInsertGtVisible || _isNavireoVisible))
                 {
-                    _resultMsg += (_resultMsg == "") ? "1. " : "2. ";
+                    _resultMsg += "\n\n";
 
                     switch (_settings.InsAppType)
                     {
@@ -339,7 +339,7 @@ namespace LauncherGTLib
                             _appName = "Subiekt GT";
                             break;
                     }
-
+                    
                     if (_checkValid)
                         _resultMsg += "Pomyślnie uruchomiono aplikację " + _appName + ".";
                     else

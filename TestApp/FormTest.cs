@@ -36,7 +36,7 @@ namespace TestApp
             //LauncherGT.Instance.AesEnc = new DataEncryptionLib.AesEncrypter("PaleL6v8TaUeN4JjFGJLHhyDVYzfBnQJ", "qRQTI/8t3R7JFTc1CYs52A==");
 
             //FormLauncher _formLauncher = new FormLauncher(_settingsDef, true);
-            FormLauncher _formLauncher = new FormLauncher(true, UserSettingsMode.InsSubiektGT);
+            FormLauncher _formLauncher = new FormLauncher(true, UserSettingsMode.SQL);
 
             //LauncherGT.Instance.SettingsPackage.Settings[0].EnabledSqlServer = false;
             //LauncherGT.Instance.SettingsPackage.Settings[0].EnabledSqlPort = false;
