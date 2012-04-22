@@ -379,6 +379,8 @@
             // CBSqlDatabase
             // 
             this.CBSqlDatabase.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.CBSqlDatabase.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
+            this.CBSqlDatabase.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.CBSqlDatabase.DisplayMember = "name";
             this.CBSqlDatabase.FormattingEnabled = true;
             this.CBSqlDatabase.Location = new System.Drawing.Point(103, 214);

@@ -232,7 +232,8 @@ namespace LauncherGTLib
                 string _sqlQuery = @"
 SELECT name
 FROM master.sys.databases
-WHERE name NOT IN ('master', 'tempdb', 'model', 'msdb', 'tempdb')";
+WHERE name NOT IN ('master', 'tempdb', 'model', 'msdb', 'tempdb')
+ORDER BY name";
 
                 if (SqlHelper.Instance.Initialize(SqlConnString))
                     SqlHelper.Instance.ExecuteDataTable(_sqlQuery, ref _dtDatabases, 0);
@@ -250,7 +251,9 @@ WHERE name NOT IN ('master', 'tempdb', 'model', 'msdb', 'tempdb')";
                     return null;
 
                 string _sqlQuery = @"
-SELECT uz_Id AS [id], uz_Nazwisko + ' ' + uz_Imie AS [uzytkownik] FROM pd_Uzytkownik";
+SELECT uz_Id AS [id], uz_Nazwisko + ' ' + uz_Imie AS [uzytkownik]
+FROM pd_Uzytkownik
+ORDER BY uzytkownik";
 
                 SqlHelper.Instance.Initialize(SqlConnString);
                 SqlHelper.Instance.ExecuteDataTable(_sqlQuery, ref _dtInsOperators, 0);
