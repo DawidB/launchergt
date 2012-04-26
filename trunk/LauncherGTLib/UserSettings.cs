@@ -253,6 +253,7 @@ ORDER BY name";
                 string _sqlQuery = @"
 SELECT uz_Id AS [id], uz_Nazwisko + ' ' + uz_Imie AS [uzytkownik]
 FROM pd_Uzytkownik
+WHERE uz_Status = 1
 ORDER BY uzytkownik";
 
                 SqlHelper.Instance.Initialize(SqlConnString);
