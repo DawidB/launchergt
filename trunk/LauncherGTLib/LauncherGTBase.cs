@@ -206,7 +206,7 @@ namespace LauncherGTLib
             set
             {
                 //set path variables
-                string _commonPathEnding = "\\LauncherGT\\" + value.TrimStart('\\').TrimEnd('\\') + "\\",
+                string _commonPathEnding = "\\LauncherGT\\" + value.TrimStart('\\').TrimEnd('\\'),
                     _commonAppData = Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData),
                     _userAppData = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
 
@@ -216,9 +216,9 @@ namespace LauncherGTLib
                 
                 //checks whether defined directory exists
                 if (Directory.Exists(_commonAppData + _commonPathEnding))
-                    _settingsFileLocation = _commonAppData + _commonPathEnding + "LauncherSettings.xml";
+                    _settingsFileLocation = _commonAppData + _commonPathEnding + "\\LauncherSettings.xml";
                 else if (Directory.Exists(_userAppData + _commonPathEnding))
-                    _settingsFileLocation = _userAppData + _commonPathEnding + "LauncherSettings.xml";
+                    _settingsFileLocation = _userAppData + _commonPathEnding + "\\LauncherSettings.xml";
                 else
                 {
                     string _appData;
@@ -229,10 +229,10 @@ namespace LauncherGTLib
                     else                        
                         _appData = _userAppData;
 
-                    if (!Directory.Exists(_appData + "\\LauncherGT\\"))
-                        Directory.CreateDirectory(_appData + "\\LauncherGT\\");
+                    if (!Directory.Exists(_appData + _commonPathEnding))
+                        Directory.CreateDirectory(_appData + _commonPathEnding);
 
-                    _settingsFileLocation = _appData + "\\LauncherGT\\LauncherSettings.xml";
+                    _settingsFileLocation = _appData + _commonPathEnding + "\\LauncherSettings.xml";
                 }
             }
         }
