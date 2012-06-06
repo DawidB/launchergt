@@ -24,25 +24,35 @@ namespace LauncherGTLib
         {
             get 
             {
+                return _navireo;
+            }
+            set
+            {
                 DanePodmiotu _subjectData = null;
 
-                try
+                if (_navireo != null)
                 {
-                    if (_navireo != null)
-                        _subjectData = _navireo.DanePodmiotu;
-                    
-                    return _navireo;
+                    Marshal.ReleaseComObject(_navireo);
+                    _navireo = null;
                 }
-                catch
+
+                _navireo = value;
+
+                if (_navireo != null)
                 {
-                    return null;
-                }
-                finally
-                {
-                    if (_subjectData != null)
+                    try
                     {
-                        Marshal.ReleaseComObject(_subjectData);
-                        _subjectData = null;
+                        _subjectData = _navireo.DanePodmiotu;
+                        WyczyscNrNip = _subjectData.NIP;
+                    }
+                    catch (Exception ex) { }
+                    finally
+                    {
+                        if (_subjectData != null)
+                        {
+                            Marshal.ReleaseComObject(_subjectData);
+                            _subjectData = null;
+                        }
                     }
                 }
             }
@@ -53,25 +63,35 @@ namespace LauncherGTLib
         {
             get
             {
+                return _subiekt;
+            }
+            set
+            {
                 DanePodmiotu _subjectData = null;
 
-                try
+                if (_subiekt != null)
                 {
-                    if (_subiekt != null)
-                        _subjectData = _subiekt.DanePodmiotu;
+                    Marshal.ReleaseComObject(_subiekt);
+                    _subiekt = null;
+                }
 
-                    return _subiekt;
-                }
-                catch
+                _subiekt = value;
+
+                if (_subiekt != null)
                 {
-                    return null;
-                }
-                finally
-                {
-                    if (_subjectData != null)
+                    try
                     {
-                        Marshal.ReleaseComObject(_subjectData);
-                        _subjectData = null;
+                        _subjectData = _subiekt.DanePodmiotu;
+                        WyczyscNrNip = _subjectData.NIP;
+                    }
+                    catch(Exception ex) { }
+                    finally
+                    {
+                        if (_subjectData != null)
+                        {
+                            Marshal.ReleaseComObject(_subjectData);
+                            _subjectData = null;
+                        }
                     }
                 }
             }
@@ -82,25 +102,35 @@ namespace LauncherGTLib
         {
             get
             {
+                return _gestor;
+            }
+            set
+            {
                 DanePodmiotu _subjectData = null;
 
-                try
+                if (_gestor != null)
                 {
-                    if (_gestor != null)
-                        _subjectData = _gestor.DanePodmiotu;
+                    Marshal.ReleaseComObject(_gestor);
+                    _gestor = null;
+                }
 
-                    return _gestor;
-                }
-                catch
+                _gestor = value;
+
+                if (_gestor != null)
                 {
-                    return null;
-                }
-                finally
-                {
-                    if (_subjectData != null)
+                    try
                     {
-                        Marshal.ReleaseComObject(_subjectData);
-                        _subjectData = null;
+                        _subjectData = _gestor.DanePodmiotu;
+                        WyczyscNrNip = _subjectData.NIP;
+                    }
+                    catch (Exception ex) { }
+                    finally
+                    {
+                        if (_subjectData != null)
+                        {
+                            Marshal.ReleaseComObject(_subjectData);
+                            _subjectData = null;
+                        }
                     }
                 }
             }
@@ -111,25 +141,35 @@ namespace LauncherGTLib
         {
             get
             {
+                return _rewizor;
+            }
+            set
+            {
                 DanePodmiotu _subjectData = null;
 
-                try
+                if (_rewizor != null)
                 {
-                    if (_rewizor != null)
-                        _subjectData = _rewizor.DanePodmiotu;
+                    Marshal.ReleaseComObject(_rewizor);
+                    _rewizor = null;
+                }
 
-                    return _rewizor;
-                }
-                catch
+                _rewizor = value;
+
+                if (_rewizor != null)
                 {
-                    return null;
-                }
-                finally
-                {
-                    if (_subjectData != null)
+                    try
                     {
-                        Marshal.ReleaseComObject(_subjectData);
-                        _subjectData = null;
+                        _subjectData = _rewizor.DanePodmiotu;
+                        WyczyscNrNip = _subjectData.NIP;
+                    }
+                    catch (Exception ex) { }
+                    finally
+                    {
+                        if (_subjectData != null)
+                        {
+                            Marshal.ReleaseComObject(_subjectData);
+                            _subjectData = null;
+                        }
                     }
                 }
             }
@@ -140,25 +180,35 @@ namespace LauncherGTLib
         {
             get
             {
+                return _gratyfikant;
+            }
+            set
+            {
                 DanePodmiotu _subjectData = null;
 
-                try
+                if (_gratyfikant != null)
                 {
-                    if (_gratyfikant != null)
-                        _subjectData = _gratyfikant.DanePodmiotu;
+                    Marshal.ReleaseComObject(_gratyfikant);
+                    _gratyfikant = null;
+                }
 
-                    return _gratyfikant;
-                }
-                catch
+                _gratyfikant = value;
+
+                if (_gratyfikant != null)
                 {
-                    return null;
-                }
-                finally
-                {
-                    if (_subjectData != null)
+                    try
                     {
-                        Marshal.ReleaseComObject(_subjectData);
-                        _subjectData = null;
+                        _subjectData = _gratyfikant.DanePodmiotu;
+                        WyczyscNrNip = _subjectData.NIP;
+                    }
+                    catch (Exception ex) { }
+                    finally
+                    {
+                        if (_subjectData != null)
+                        {
+                            Marshal.ReleaseComObject(_subjectData);
+                            _subjectData = null;
+                        }
                     }
                 }
             }
@@ -170,6 +220,28 @@ namespace LauncherGTLib
         public UCSettings[] UCSub { get; set; }
 
         public SettingsPackage SettingsPackage { get; set; }
+
+        private string _nipPodmiotu = "";
+        public string NipPodmiotu
+        {
+            get
+            {
+                return _nipPodmiotu;
+            }
+        }
+        private string WyczyscNrNip
+        {
+            set
+            {
+                _nipPodmiotu = "";
+
+                foreach (char _c in value)
+                {
+                    if (_c >= 48 && _c <= 57)
+                        _nipPodmiotu += _c;
+                }
+            }
+        }
 
 
 
@@ -187,7 +259,7 @@ namespace LauncherGTLib
             {
                 if (_startWithIqa)
                 {
-                    _navireo = (Navireo)Marshal.BindToMoniker(_settings.NavFilePath);
+                    Navireo = (Navireo)Marshal.BindToMoniker(_settings.NavFilePath);
                     return true;
                 }
                 else
@@ -197,7 +269,7 @@ namespace LauncherGTLib
                     if (!string.IsNullOrEmpty(_settings.SqlPort))
                         _sqlServer += "," + _settings.SqlPort;
 
-                    _navireo = new Navireo();
+                    Navireo = new Navireo();
                     _navireo.Zaloguj(_sqlServer,
                         (AutentykacjaEnum)_settings.SqlAuthentication,
                         _settings.SqlLogin,
@@ -244,23 +316,23 @@ namespace LauncherGTLib
                 {
                     case ProduktEnum.gtaProduktGestor:
                         DisposeGestorGT();
-                        _gestor = (Gestor)_insGt.Uruchom(_settings.InsAppLoginMode, _settings.InsAppStartMode);
-                        _testInsApp = _subiekt.MagazynId;
+                        Gestor = (Gestor)_insGt.Uruchom(_settings.InsAppLoginMode, _settings.InsAppStartMode);
+                        _testInsApp = Gestor.OperatorId;
                         break;
                     case ProduktEnum.gtaProduktGratyfikant:
                         DisposeGratyfikantGT();
-                        _gratyfikant = (Gratyfikant)_insGt.Uruchom(_settings.InsAppLoginMode, _settings.InsAppStartMode);
-                        _testInsApp = _subiekt.MagazynId;
+                        Gratyfikant = (Gratyfikant)_insGt.Uruchom(_settings.InsAppLoginMode, _settings.InsAppStartMode);
+                        _testInsApp = Gratyfikant.OperatorId;
                         break;
                     case ProduktEnum.gtaProduktRewizor:
                         DisposeRewizorGT();
-                        _rewizor = (Rewizor)_insGt.Uruchom(_settings.InsAppLoginMode, _settings.InsAppStartMode);
-                        _testInsApp = _subiekt.MagazynId;
+                        Rewizor = (Rewizor)_insGt.Uruchom(_settings.InsAppLoginMode, _settings.InsAppStartMode);
+                        _testInsApp = Rewizor.OperatorId;
                         break;
                     default:
                         DisposeSubiektGT();
-                        _subiekt = (Subiekt)_insGt.Uruchom(_settings.InsAppLoginMode, _settings.InsAppStartMode);
-                        _testInsApp = _subiekt.MagazynId;
+                        Subiekt = (Subiekt)_insGt.Uruchom(_settings.InsAppLoginMode, _settings.InsAppStartMode);
+                        _testInsApp = Subiekt.OperatorId;
                         break;
                 }
 
