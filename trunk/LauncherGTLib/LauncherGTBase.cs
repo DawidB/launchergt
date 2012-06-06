@@ -8,6 +8,7 @@ using InsERT;
 using DataEncryptionLib;
 using System.Data.SqlClient;
 using SqlHelperLib;
+using System.IO;
 
 namespace LauncherGTLib
 {
@@ -30,12 +31,7 @@ namespace LauncherGTLib
             {
                 DanePodmiotu _subjectData = null;
 
-                if (_navireo != null)
-                {
-                    Marshal.ReleaseComObject(_navireo);
-                    _navireo = null;
-                }
-
+                DisposeNavireo();
                 _navireo = value;
 
                 if (_navireo != null)
@@ -69,12 +65,7 @@ namespace LauncherGTLib
             {
                 DanePodmiotu _subjectData = null;
 
-                if (_subiekt != null)
-                {
-                    Marshal.ReleaseComObject(_subiekt);
-                    _subiekt = null;
-                }
-
+                DisposeSubiektGT();
                 _subiekt = value;
 
                 if (_subiekt != null)
@@ -108,12 +99,7 @@ namespace LauncherGTLib
             {
                 DanePodmiotu _subjectData = null;
 
-                if (_gestor != null)
-                {
-                    Marshal.ReleaseComObject(_gestor);
-                    _gestor = null;
-                }
-
+                DisposeGestorGT();
                 _gestor = value;
 
                 if (_gestor != null)
@@ -147,12 +133,7 @@ namespace LauncherGTLib
             {
                 DanePodmiotu _subjectData = null;
 
-                if (_rewizor != null)
-                {
-                    Marshal.ReleaseComObject(_rewizor);
-                    _rewizor = null;
-                }
-
+                DisposeRewizorGT();
                 _rewizor = value;
 
                 if (_rewizor != null)
@@ -186,12 +167,7 @@ namespace LauncherGTLib
             {
                 DanePodmiotu _subjectData = null;
 
-                if (_gratyfikant != null)
-                {
-                    Marshal.ReleaseComObject(_gratyfikant);
-                    _gratyfikant = null;
-                }
-
+                DisposeGratyfikantGT();
                 _gratyfikant = value;
 
                 if (_gratyfikant != null)
@@ -215,7 +191,52 @@ namespace LauncherGTLib
         }
 
         public string ErrorMsg { get; set; }
-        public string SettingsFile = "LauncherSettings.xml";
+
+        public bool IsSettingsFileShared = true;
+        private string _settingsFileLocation;
+        public string SettingsFileLocation
+        {
+            get
+            {
+                return _settingsFileLocation;
+            }
+        }
+        public string ApplicationName
+        {
+            set
+            {
+                //set path variables
+                string _commonPathEnding = "\\LauncherGT\\" + value.TrimStart('\\').TrimEnd('\\') + "\\",
+                    _commonAppData = Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData),
+                    _userAppData = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
+
+                //if application name wasn't defined, set default directory
+                if (value == "")
+                    _commonPathEnding = "\\LauncherGT\\";
+                
+                //checks whether defined directory exists
+                if (Directory.Exists(_commonAppData + _commonPathEnding))
+                    _settingsFileLocation = _commonAppData + _commonPathEnding + "LauncherSettings.xml";
+                else if (Directory.Exists(_userAppData + _commonPathEnding))
+                    _settingsFileLocation = _userAppData + _commonPathEnding + "LauncherSettings.xml";
+                else
+                {
+                    string _appData;
+
+                    //if directory doesn't exists, it is created
+                    if (IsSettingsFileShared)
+                        _appData = _commonAppData;
+                    else                        
+                        _appData = _userAppData;
+
+                    if (!Directory.Exists(_appData + "\\LauncherGT\\"))
+                        Directory.CreateDirectory(_appData + "\\LauncherGT\\");
+
+                    _settingsFileLocation = _appData + "\\LauncherGT\\LauncherSettings.xml";
+                }
+            }
+        }
+
 
         public UCSettings[] UCSub { get; set; }
 
@@ -296,6 +317,7 @@ namespace LauncherGTLib
             object _testInsApp = null;
             GT _insGt = new GT();
             Dodatki _insAddons = new Dodatki();
+
             try
             {
                 string _sqlServer = _settings.SqlServer;
@@ -315,22 +337,18 @@ namespace LauncherGTLib
                 switch (_insApp)
                 {
                     case ProduktEnum.gtaProduktGestor:
-                        DisposeGestorGT();
                         Gestor = (Gestor)_insGt.Uruchom(_settings.InsAppLoginMode, _settings.InsAppStartMode);
                         _testInsApp = Gestor.OperatorId;
                         break;
                     case ProduktEnum.gtaProduktGratyfikant:
-                        DisposeGratyfikantGT();
                         Gratyfikant = (Gratyfikant)_insGt.Uruchom(_settings.InsAppLoginMode, _settings.InsAppStartMode);
                         _testInsApp = Gratyfikant.OperatorId;
                         break;
                     case ProduktEnum.gtaProduktRewizor:
-                        DisposeRewizorGT();
                         Rewizor = (Rewizor)_insGt.Uruchom(_settings.InsAppLoginMode, _settings.InsAppStartMode);
                         _testInsApp = Rewizor.OperatorId;
                         break;
                     default:
-                        DisposeSubiektGT();
                         Subiekt = (Subiekt)_insGt.Uruchom(_settings.InsAppLoginMode, _settings.InsAppStartMode);
                         _testInsApp = Subiekt.OperatorId;
                         break;

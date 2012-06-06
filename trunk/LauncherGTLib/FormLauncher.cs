@@ -17,7 +17,7 @@ namespace LauncherGTLib
         {
             try
             {
-                FileStream _fileStream = new FileStream(LauncherGT.Instance.SettingsFile, FileMode.Create);
+                FileStream _fileStream = new FileStream(LauncherGT.Instance.SettingsFileLocation, FileMode.Create);
                 XmlSerializer _serializer = new XmlSerializer(LauncherGT.Instance.SettingsPackage.GetType());
                 XmlSerializerNamespaces _namespace = new XmlSerializerNamespaces();
                 _namespace.Add("", "");
@@ -36,7 +36,7 @@ namespace LauncherGTLib
         {
             try
             {
-                FileStream _fileStream = new FileStream(LauncherGT.Instance.SettingsFile, FileMode.Open);
+                FileStream _fileStream = new FileStream(LauncherGT.Instance.SettingsFileLocation, FileMode.Open);
                 XmlSerializer _serializer = new XmlSerializer(LauncherGT.Instance.SettingsPackage.GetType(), "");
 
                 SettingsPackage _loaded = (SettingsPackage)_serializer.Deserialize(_fileStream);
@@ -63,7 +63,7 @@ namespace LauncherGTLib
                 
 
 
-        public FormLauncher(bool _showMessages = false, UserSettingsMode _settingsMode = UserSettingsMode.Full)
+        public FormLauncher(bool _showMessages = false, UserSettingsMode _settingsMode = UserSettingsMode.Full, string _appName = "")
         {
             InitializeComponent();
 
@@ -72,6 +72,8 @@ namespace LauncherGTLib
 
             LauncherGT.Instance.SettingsPackage = new SettingsPackage();
             LauncherGT.Instance.SettingsPackage.Settings[0] = new UserSettings();
+
+            LauncherGT.Instance.ApplicationName = _appName;
             LoadSettings();
 
             LauncherGT.Instance.UCSub = new UCSettings[1];
@@ -85,7 +87,7 @@ namespace LauncherGTLib
                 this.Height = 490;
         }
 
-        public FormLauncher(SettingsDefinition[] _settingsDef, bool _showMessages = false)
+        public FormLauncher(SettingsDefinition[] _settingsDef, bool _showMessages = false, string _appName = "")
         {
             InitializeComponent();
 
@@ -94,6 +96,7 @@ namespace LauncherGTLib
             LauncherGT.Instance.SettingsPackage = new SettingsPackage(_settingsDef.Length);
             LauncherGT.Instance.UCSub = new UCSettings[_settingsDef.Length];
 
+            LauncherGT.Instance.ApplicationName = _appName;
             LoadSettings();
 
             for (int i = 0; i < LauncherGT.Instance.UCSub.Length; i++)
