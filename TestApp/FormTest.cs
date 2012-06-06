@@ -55,7 +55,7 @@ namespace TestApp
             //_formLauncher.Size = new Size(350, 400);
             //DialogResult dr = _formLauncher.SilentStart();
             DialogResult dr = _formLauncher.ShowDialog();
-            
+
             _formLauncher.Dispose();
             this.Close();
         }
