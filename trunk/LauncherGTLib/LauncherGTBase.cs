@@ -63,16 +63,15 @@ namespace LauncherGTLib
             }
             set
             {
-                DanePodmiotu _subjectData = null;
-
-                DisposeSubiektGT();
                 _subiekt = value;
 
-                if (_subiekt != null)
+                if (value != null)
                 {
+                    DanePodmiotu _subjectData = null;
+
                     try
                     {
-                        _subjectData = _subiekt.DanePodmiotu;
+                        _subjectData = value.DanePodmiotu;
                         WyczyscNrNip = _subjectData.NIP;
                     }
                     catch(Exception ex) { }
@@ -97,13 +96,12 @@ namespace LauncherGTLib
             }
             set
             {
-                DanePodmiotu _subjectData = null;
-
-                DisposeGestorGT();
                 _gestor = value;
 
                 if (_gestor != null)
                 {
+                    DanePodmiotu _subjectData = null;
+
                     try
                     {
                         _subjectData = _gestor.DanePodmiotu;
@@ -337,18 +335,22 @@ namespace LauncherGTLib
                 switch (_insApp)
                 {
                     case ProduktEnum.gtaProduktGestor:
+                        DisposeGestorGT();
                         Gestor = (Gestor)_insGt.Uruchom(_settings.InsAppLoginMode, _settings.InsAppStartMode);
                         _testInsApp = Gestor.OperatorId;
                         break;
                     case ProduktEnum.gtaProduktGratyfikant:
+                        DisposeGratyfikantGT();
                         Gratyfikant = (Gratyfikant)_insGt.Uruchom(_settings.InsAppLoginMode, _settings.InsAppStartMode);
                         _testInsApp = Gratyfikant.OperatorId;
                         break;
                     case ProduktEnum.gtaProduktRewizor:
+                        DisposeRewizorGT();
                         Rewizor = (Rewizor)_insGt.Uruchom(_settings.InsAppLoginMode, _settings.InsAppStartMode);
                         _testInsApp = Rewizor.OperatorId;
                         break;
                     default:
+                        DisposeSubiektGT();
                         Subiekt = (Subiekt)_insGt.Uruchom(_settings.InsAppLoginMode, _settings.InsAppStartMode);
                         _testInsApp = Subiekt.OperatorId;
                         break;
