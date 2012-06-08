@@ -8,6 +8,7 @@ using System.Text;
 using System.IO;
 using System.Xml.Serialization;
 using System.Windows.Forms;
+using Microsoft.Win32;      
 
 namespace LauncherGTLib
 {
@@ -28,7 +29,7 @@ namespace LauncherGTLib
             }
             catch (Exception ex)
             {
-
+                //MessageBox.Show("błąd przy zapisie: " + ex.Message);
             }
         }
 
@@ -38,7 +39,7 @@ namespace LauncherGTLib
             {
                 FileStream _fileStream = new FileStream(LauncherGT.Instance.SettingsFileLocation, FileMode.Open);
                 XmlSerializer _serializer = new XmlSerializer(LauncherGT.Instance.SettingsPackage.GetType(), "");
-
+                
                 SettingsPackage _loaded = (SettingsPackage)_serializer.Deserialize(_fileStream);
                 if (_loaded.Settings.Length == LauncherGT.Instance.SettingsPackage.Settings.Length)
                     LauncherGT.Instance.SettingsPackage = _loaded;
@@ -48,7 +49,7 @@ namespace LauncherGTLib
             }
             catch(Exception ex)
             {
-
+                //MessageBox.Show("błąd przy wczytywaniu: " + ex.Message);
             }
         }
 
