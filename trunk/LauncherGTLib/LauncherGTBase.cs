@@ -190,7 +190,7 @@ namespace LauncherGTLib
 
         public string ErrorMsg { get; set; }
 
-        public bool IsSettingsFileShared = true;
+        //public bool IsSettingsFileShared = true;
         private string _settingsFileLocation;
         public string SettingsFileLocation
         {
@@ -205,26 +205,29 @@ namespace LauncherGTLib
             {
                 //set path variables
                 string _commonPathEnding = "\\LauncherGT\\" + value.TrimStart('\\').TrimEnd('\\'),
-                    _commonAppData = Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData),
+                    //_commonAppData = Environment.GetFolderPath(Environment.SpecialFolder.CommonProgramFiles),
                     _userAppData = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
+                
+
 
                 //if application name wasn't defined, set default directory
                 if (value == "")
                     _commonPathEnding = "\\LauncherGT\\";
                 
                 //checks whether defined directory exists
-                if (Directory.Exists(_commonAppData + _commonPathEnding))
-                    _settingsFileLocation = _commonAppData + _commonPathEnding + "\\LauncherSettings.xml";
-                else if (Directory.Exists(_userAppData + _commonPathEnding))
+                //if (Directory.Exists(_commonAppData + _commonPathEnding))
+                //    _settingsFileLocation = _commonAppData + _commonPathEnding + "\\LauncherSettings.xml";
+                //else 
+                    if (Directory.Exists(_userAppData + _commonPathEnding))
                     _settingsFileLocation = _userAppData + _commonPathEnding + "\\LauncherSettings.xml";
                 else
                 {
                     string _appData;
 
                     //if directory doesn't exists, it is created
-                    if (IsSettingsFileShared)
-                        _appData = _commonAppData;
-                    else                        
+                    //if (IsSettingsFileShared)
+                    //    _appData = _commonAppData;
+                    //else                        
                         _appData = _userAppData;
 
                     if (!Directory.Exists(_appData + _commonPathEnding))
