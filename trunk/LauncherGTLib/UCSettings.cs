@@ -403,7 +403,7 @@ namespace LauncherGTLib
 
         private void LLCheckData_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            CheckSettings(false);
+            CheckSettings(true);
         }
 
         private void LLInsAppLoginMode_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)

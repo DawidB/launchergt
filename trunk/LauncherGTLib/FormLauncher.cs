@@ -27,7 +27,7 @@ namespace LauncherGTLib
                 _fileStream.Flush();
                 _fileStream.Close();
             }
-            catch (Exception ex)
+            catch //(Exception ex)
             {
                 //MessageBox.Show("błąd przy zapisie: " + ex.Message);
             }
@@ -47,7 +47,7 @@ namespace LauncherGTLib
                 _fileStream.Flush();
                 _fileStream.Close();
             }
-            catch(Exception ex)
+            catch//(Exception ex)
             {
                 //MessageBox.Show("błąd przy wczytywaniu: " + ex.Message);
             }
