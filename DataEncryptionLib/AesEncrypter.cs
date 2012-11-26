@@ -1,62 +1,75 @@
-﻿using System.Security.Cryptography;
-using System.Text;
-using System;
+﻿namespace DataEncryptionLib
+{
+    using System;
+    using System.Security.Cryptography;
+    using System.Text;
 
-namespace DataEncryptionLib
-{    
+    /// <summary>
+    /// A simple class used to encrypt and decrypt strings with given key and initialization vector.
+    /// </summary>
     public class AesEncrypter
     {
-        private AesCryptoServiceProvider _aesCSP = new AesCryptoServiceProvider();
-        public AesCryptoServiceProvider AesCSP { get { return _aesCSP; } }
+        /// <summary>
+        /// A field containing crypt service.
+        /// </summary>
+        private AesCryptoServiceProvider aesCSP = new AesCryptoServiceProvider();
 
         /// <summary>
-        /// Default constructor. Automatically generates crypt key and initialization vector.
+        /// Initializes a new instance of the <see cref="AesEncrypter" /> class.
         /// Key and vector are valid only for active session.
         /// </summary>
         public AesEncrypter()
         {
-            _aesCSP.GenerateKey();
-            _aesCSP.GenerateIV();
+            this.aesCSP.GenerateKey();
+            this.aesCSP.GenerateIV();
         }
 
         /// <summary>
-        /// Constructor accepting crypt key and initialization vector defined by user.
+        /// Initializes a new instance of the <see cref="AesEncrypter" /> class.
         /// Key and vector are valid for multiple sessions.
         /// </summary>
-        /// <param name="_key"></param>
-        /// <param name="_iv"></param>
-        public AesEncrypter(string _key, string _initVector)
+        /// <param name="key">A crypt key</param>
+        /// <param name="initVector">An initialization vector.</param>
+        public AesEncrypter(string key, string initVector)
         {
-            //AesEncrypter _aes = new AesEncrypter("HrJpIPjRye8ycBsSYum1fJplEfb05/hz", "gWBVw8Ytz2wlhZuOIBuckw==");
+            ////AesEncrypter aes = new AesEncrypter("HrJpIPjRye8ycBsSYum1fJplEfb05/hz", "gWBVw8Ytz2wlhZuOIBuckw==");
 
             try
             {
-                _aesCSP.Key = Convert.FromBase64String(_key);
-                _aesCSP.IV = Convert.FromBase64String(_initVector);
+                this.aesCSP.Key = Convert.FromBase64String(key);
+                this.aesCSP.IV = Convert.FromBase64String(initVector);
             }
             catch
             {
-                _aesCSP.GenerateKey();
-                _aesCSP.GenerateIV();
+                this.aesCSP.GenerateKey();
+                this.aesCSP.GenerateIV();
             }
+        }
+
+        /// <summary>
+        /// Gets an accessor referencing crypt service.
+        /// </summary>
+        public AesCryptoServiceProvider AesCSP
+        {
+            get { return this.aesCSP; }
         }
         
         /// <summary>
         /// Encrypts string and return array of byte.
         /// </summary>
-        /// <param name="_stringToEncrypt"></param>
-        /// <returns></returns>
-        public byte[] EncryptString(string _stringToEncrypt)
+        /// <param name="stringToEncrypt">A string to encrypt.</param>
+        /// <returns>Encrypted bytes array.</returns>
+        public byte[] EncryptString(string stringToEncrypt)
         {
             try
             {
-                byte[] inBlock = UnicodeEncoding.Unicode.GetBytes(_stringToEncrypt);
-                ICryptoTransform xfrm = _aesCSP.CreateEncryptor();
+                byte[] inBlock = UnicodeEncoding.Unicode.GetBytes(stringToEncrypt);
+                ICryptoTransform xfrm = this.aesCSP.CreateEncryptor();
                 byte[] outBlock = xfrm.TransformFinalBlock(inBlock, 0, inBlock.Length);
 
                 return outBlock;
             }
-            catch (Exception ex)
+            catch
             {
                 return null;
             }
@@ -65,58 +78,58 @@ namespace DataEncryptionLib
         /// <summary>
         /// Decrypts array of byte and returns string.
         /// </summary>
-        /// <param name="_bytesToDecrypt"></param>
-        /// <returns></returns>
-        public string DecryptBytes(byte[] _bytesToDecrypt)
+        /// <param name="bytesToDecrypt">Bytes array to decrypt.</param>
+        /// <returns>Decrypted string.</returns>
+        public string DecryptBytes(byte[] bytesToDecrypt)
         {
             try
             {
-                ICryptoTransform xfrm = _aesCSP.CreateDecryptor();
-                byte[] outBlock = xfrm.TransformFinalBlock(_bytesToDecrypt, 0, _bytesToDecrypt.Length);
+                ICryptoTransform xfrm = this.aesCSP.CreateDecryptor();
+                byte[] outBlock = xfrm.TransformFinalBlock(bytesToDecrypt, 0, bytesToDecrypt.Length);
 
                 return UnicodeEncoding.Unicode.GetString(outBlock);
             }
-            catch (Exception ex)
+            catch
             {
-                return "";
+                return string.Empty;
             }
         }
 
         /// <summary>
-        /// Simplified encrypter - returns encrypted string.
+        /// Simplified encrypting function - returns encrypted string.
         /// </summary>
-        /// <param name="_stringToEncrypt"></param>
-        /// <returns></returns>
-        public string GetEncryptedString(string _stringToEncrypt)
+        /// <param name="stringToEncrypt">A string to encrypt.</param>
+        /// <returns>Decrypted string array.</returns>
+        public string GetEncryptedString(string stringToEncrypt)
         {
             try
             {
-                byte[] _decryptedArray = EncryptString(_stringToEncrypt);
+                byte[] decryptedArray = this.EncryptString(stringToEncrypt);
 
-                return Convert.ToBase64String(_decryptedArray);
+                return Convert.ToBase64String(decryptedArray);
             }
             catch
             {
-                return "";
+                return string.Empty;
             }
         }
 
         /// <summary>
-        /// Simplified decrypter - returns decrypted string.
+        /// Simplified decrypting function - returns decrypted string.
         /// </summary>
-        /// <param name="_stringToDecrypt"></param>
-        /// <returns></returns>
-        public string GetDecryptedString(string _stringToDecrypt)
+        /// <param name="stringToDecrypt">A string to decrypt.</param>
+        /// <returns>Decrypted string.</returns>
+        public string GetDecryptedString(string stringToDecrypt)
         {
             try
             {
-                byte[] _encryptedArray = Convert.FromBase64String(_stringToDecrypt);
+                byte[] encryptedArray = Convert.FromBase64String(stringToDecrypt);
 
-                return DecryptBytes(_encryptedArray);
+                return this.DecryptBytes(encryptedArray);
             }
             catch
             {
-                return "";
+                return string.Empty;
             }
         }
     }

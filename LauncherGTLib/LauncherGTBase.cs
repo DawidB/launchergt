@@ -41,7 +41,7 @@ namespace LauncherGTLib
                         _subjectData = _navireo.DanePodmiotu;
                         WyczyscNrNip = _subjectData.NIP;
                     }
-                    catch (Exception ex) { }
+                    catch { }
                     finally
                     {
                         if (_subjectData != null)

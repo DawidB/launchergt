@@ -1,18 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Data;
-using System.Xml;
-using System.Xml.Serialization;
-using System.IO;
-using SqlHelperGTLib;
-using SqlHelperLib;
-using System.Windows.Forms;
-using InsERT;
-
-namespace LauncherGTLib
+﻿namespace LauncherGTLib
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Text;
+    using System.Data;
+    using System.Xml;
+    using System.Xml.Serialization;
+    using System.IO;
+    using SqlHelperGTLib;
+    using SqlHelperLib;
+    using System.Windows.Forms;
+    using InsERT;
+
     [Serializable]
     public class UserSettings
     {
