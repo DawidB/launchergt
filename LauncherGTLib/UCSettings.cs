@@ -288,7 +288,7 @@ namespace LauncherGTLib
                 ChBSqlPassword.Enabled = false;
         }
 
-        public bool CheckSettings(bool _overrideShowMsgs = true)
+        public bool CheckSettings(bool _overrideShowMsgs)
         {
             bool _checkValid = true;
             string _resultMsg = "",
@@ -318,7 +318,7 @@ namespace LauncherGTLib
                     {
                         case 0:
                             if (_settings.NavStartMode == 0)
-                                _checkValid = LauncherGT.Instance.StartNavireo(_settings);
+                                _checkValid = LauncherGT.Instance.StartNavireo(_settings, false);
                             else
                                 _checkValid = LauncherGT.Instance.StartNavireo(_settings, true);
                             break;
@@ -403,7 +403,7 @@ namespace LauncherGTLib
 
         private void LLCheckData_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            CheckSettings();
+            CheckSettings(false);
         }
 
         private void LLInsAppLoginMode_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)

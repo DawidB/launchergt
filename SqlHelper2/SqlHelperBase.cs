@@ -184,7 +184,7 @@ namespace SqlHelperLib
         /// <param name="_sqlQuery"></param>
         /// <param name="_dataTable"></param>
         /// <param name="_tabId"></param>
-        public bool ExecuteDataTable(string _sqlQuery, ref DataTable _dataTable, int _tabId = 0)
+        public bool ExecuteDataTable(string _sqlQuery, ref DataTable _dataTable, int _tabId)
         {
             _dataTable = null;
             _errorMsg = "";
@@ -202,6 +202,11 @@ namespace SqlHelperLib
             return false;
         }
 
+        public bool ExecuteDataTable(string _sqlQuery, ref DataTable _dataTable)
+        {
+            return ExecuteDataTable(_sqlQuery, ref _dataTable, 0);
+        }
+
         /// <summary>
         /// Metoda zwracająca wiersz z danymi, zwrócony w wyniku wykonania zapytania.
         /// Opcjonalnie użytkownik może podać indeks tabeli oraz wiersza, zwracanej w wyniku wykonania zapytania.
@@ -210,7 +215,7 @@ namespace SqlHelperLib
         /// <param name="_dataTable"></param>
         /// <param name="_tabId"></param>
         /// <returns></returns>
-        public bool ExecuteDataRow(string _sqlQuery, ref DataRow _dataRow, int _tabId = 0, int _rowId = 0)
+        public bool ExecuteDataRow(string _sqlQuery, ref DataRow _dataRow, int _tabId, int _rowId)
         {
             _dataRow = null;
             _errorMsg = "";
@@ -226,6 +231,11 @@ namespace SqlHelperLib
                 }
 
             return false;
+        }
+
+        public bool ExecuteDataRow(string _sqlQuery, ref DataRow _dataRow)
+        {
+            return ExecuteDataRow(_sqlQuery, ref _dataRow, 0, 0);
         }
         
         /// <summary>
@@ -264,7 +274,7 @@ namespace SqlHelperLib
         /// <param name="_sqlQuery"></param>
         /// <param name="_valId"></param>
         /// <returns></returns>
-        public object ReturnObj(string _sqlQuery, int _colId = 0)
+        public object ReturnObj(string _sqlQuery, int _colId)
         {
             DataTable _dt = null;
             _errorMsg = "";
@@ -287,6 +297,11 @@ namespace SqlHelperLib
                 return null;
             }
         }
+        
+        public object ReturnObj(string _sqlQuery)
+        {
+            return ReturnObj(_sqlQuery, 0);
+        }
 
         /// <summary>
         /// Metoda zwracająca wartość typu "int", pochodzącą z wybranej kolumny.
@@ -295,7 +310,7 @@ namespace SqlHelperLib
         /// <param name="_sqlQuery"></param>
         /// <param name="_colId"></param>
         /// <returns></returns>
-        public int ReturnInt(string _sqlQuery, int _colId = 0)
+        public int ReturnInt(string _sqlQuery, int _colId)
         {
             _errorMsg = "";
 
@@ -315,6 +330,11 @@ namespace SqlHelperLib
                 return 0;
             }
         }
+        
+        public object ReturnInt(string _sqlQuery)
+        {
+            return ReturnInt(_sqlQuery, 0);
+        }
 
         /// <summary>
         /// Metoda zwracająca wartość typu "decimal", pochodzącą z wybranej kolumny.
@@ -323,7 +343,7 @@ namespace SqlHelperLib
         /// <param name="_sqlQuery"></param>
         /// <param name="_colId"></param>
         /// <returns></returns>
-        public decimal ReturnDec(string _sqlQuery, int _colId = 0)
+        public decimal ReturnDec(string _sqlQuery, int _colId)
         {
             _errorMsg = "";
 
@@ -344,6 +364,11 @@ namespace SqlHelperLib
             }
         }
         
+        public object ReturnDec(string _sqlQuery)
+        {
+            return ReturnDec(_sqlQuery, 0);
+        }
+        
         /// <summary>
         /// Metoda zwracająca wartość typu "string", pochodzącą z wybranej kolumny.
         /// W przypadku nieudanego wykonania zapytania zwracany jest pusty ciąg znaków.
@@ -351,7 +376,7 @@ namespace SqlHelperLib
         /// <param name="_sqlQuery"></param>
         /// <param name="_colId"></param>
         /// <returns></returns>
-        public string ReturnStr(string _sqlQuery, int _colId = 0)
+        public string ReturnStr(string _sqlQuery, int _colId)
         {
             _errorMsg = "";
 
@@ -371,6 +396,11 @@ namespace SqlHelperLib
                 return string.Empty;
             }
         }
+        
+        public object ReturnStr(string _sqlQuery)
+        {
+            return ReturnStr(_sqlQuery, 0);
+        }
 
         /// <summary>
         /// Metoda zwracająca wartość typu "bool", pochodzącą z wybranej kolumny.
@@ -379,7 +409,7 @@ namespace SqlHelperLib
         /// <param name="_sqlQuery"></param>
         /// <param name="_colId"></param>
         /// <returns></returns>
-        public bool ReturnBool(string _sqlQuery, int _colId = 0)
+        public bool ReturnBool(string _sqlQuery, int _colId)
         {
             _errorMsg = "";
 
@@ -398,6 +428,11 @@ namespace SqlHelperLib
                 ShowErrorMessage("ReturnBool");
                 return false;
             }
+        }
+        
+        public object ReturnBool(string _sqlQuery)
+        {
+            return ReturnBool(_sqlQuery, 0);
         }
     }
 }
