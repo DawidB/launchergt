@@ -273,7 +273,7 @@ namespace LauncherGTLib
              CloseInsAppsOnExit = false;
         }
 
-        public bool StartNavireo(UserSettings _settings, bool _startWithIqa = false)
+        public bool StartNavireo(UserSettings _settings, bool _startWithIqa)
         {
             DisposeNavireo();
 

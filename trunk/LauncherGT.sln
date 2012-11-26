@@ -1,6 +1,6 @@
 ﻿
-Microsoft Visual Studio Solution File, Format Version 11.00
-# Visual C# Express 2010
+Microsoft Visual Studio Solution File, Format Version 10.00
+# Visual C# Express 2008
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SqlHelperLib", "SqlHelper2\SqlHelperLib.csproj", "{F4A9989C-2060-4EBD-B7F7-E2FC759DE1F7}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SqlHelperGTLib", "SqlHelperGT\SqlHelperGTLib.csproj", "{F7FCE5CA-C684-413C-B1DC-E21828763E81}"

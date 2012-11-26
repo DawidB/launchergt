@@ -64,7 +64,7 @@ namespace LauncherGTLib
                 
 
 
-        public FormLauncher(bool _showMessages = false, UserSettingsMode _settingsMode = UserSettingsMode.Full, string _appName = "")
+        public FormLauncher(bool _showMessages, UserSettingsMode _settingsMode, string _appName)
         {
             InitializeComponent();
 
@@ -88,7 +88,7 @@ namespace LauncherGTLib
                 this.Height = 490;
         }
 
-        public FormLauncher(SettingsDefinition[] _settingsDef, bool _showMessages = false, string _appName = "")
+        public FormLauncher(SettingsDefinition[] _settingsDef, bool _showMessages, string _appName)
         {
             InitializeComponent();
 
