@@ -22,6 +22,9 @@
         {
             this.aesCSP.GenerateKey();
             this.aesCSP.GenerateIV();
+
+            //string key2 = Convert.ToBase64String(this.aesCSP.Key),
+            //    iv2 = Convert.ToBase64String(this.aesCSP.IV);
         }
 
         /// <summary>
