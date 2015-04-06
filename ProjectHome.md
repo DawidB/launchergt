@@ -1,0 +1,2 @@
+LauncherGT is a project aimed at simplyfing development of extensions for InsERT software - Polish company selling products aimed at small-to-medium businesses.
+LauncherGT is a starting point containing user login manager and container with necessary InsERT objects.
